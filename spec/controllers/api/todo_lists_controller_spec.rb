@@ -35,4 +35,54 @@ describe Api::TodoListsController do
       end
     end
   end
+
+  describe 'POST create' do
+    context 'with valid params' do
+      it 'creates a new todo list' do
+        expect {
+          post :create, params: { todo_list: { name: 'New List' } }, format: :json
+        }.to change(TodoList, :count).by(1)
+      end
+
+      it 'returns a created status code' do
+        post :create, params: { todo_list: { name: 'New List' } }, format: :json
+
+        expect(response.status).to eq(201)
+      end
+
+      it 'returns the created todo list' do
+        post :create, params: { todo_list: { name: 'New List' } }, format: :json
+
+        todo_list = JSON.parse(response.body)
+
+        aggregate_failures 'includes the id and name' do
+          expect(todo_list['name']).to eq('New List')
+          expect(todo_list['id']).not_to be_nil
+        end
+      end
+    end
+
+    context 'with invalid params' do
+      before { TodoList.create!(name: 'Existing List') }
+
+      it 'does not create a todo list' do
+        expect {
+          post :create, params: { todo_list: { name: 'Existing List' } }, format: :json
+        }.not_to change(TodoList, :count)
+      end
+
+      it 'returns an unprocessable entity status code' do
+        post :create, params: { todo_list: { name: 'Existing List' } }, format: :json
+
+        expect(response.status).to eq(422)
+      end
+
+      it 'returns errors in the response' do
+        post :create, params: { todo_list: { name: 'Existing List' } }, format: :json
+
+        body = JSON.parse(response.body)
+        expect(body['errors']['name']).to include('has already been taken')
+      end
+    end
+  end
 end
