@@ -15,6 +15,12 @@ describe Api::TodoListsController do
     end
 
     context 'when format is JSON' do
+      it 'returns the expected content type' do
+        get :index, format: :json
+
+        expect(response.media_type).to eq('application/json')
+      end
+
       it 'returns a success code' do
         get :index, format: :json
 

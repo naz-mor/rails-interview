@@ -5,8 +5,6 @@ module Api
     # GET /api/todolists
     def index
       @todo_lists = TodoList.all
-
-      respond_to :json
     end
 
     # POST /api/todolists

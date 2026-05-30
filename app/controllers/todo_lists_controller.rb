@@ -4,15 +4,11 @@ class TodoListsController < ApplicationController
   # GET /todolists
   def index
     @todo_lists = TodoList.all
-
-    respond_to :html
   end
 
   # GET /todolists/new
   def new
     @todo_list = TodoList.new
-
-    respond_to :html
   end
 
   # POST /todolists
@@ -20,7 +16,7 @@ class TodoListsController < ApplicationController
     @todo_list = TodoList.new(todo_list_params)
 
     if @todo_list.save
-      redirect_to todo_lists_path
+      redirect_to todo_lists_path, notice: 'Todo list created successfully.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -28,7 +24,6 @@ class TodoListsController < ApplicationController
 
   # GET /todolists/:id/edit
   def edit
-    respond_to :html
   end
 
   # PATCH/PUT /todolists/:id
@@ -49,7 +44,7 @@ class TodoListsController < ApplicationController
   private
 
   def set_todo_list
-    @todo_list = TodoList.find(params[:id])
+    @todo_list = TodoList.find(params.require(:id))
   end
 
   def todo_list_params
