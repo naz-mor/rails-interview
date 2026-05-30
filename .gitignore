@@ -36,3 +36,6 @@ rails_interview_test
 
 # Ignore local agent instructions.
 /AGENTS.local.md
+
+# Ignore Playwright MCP local state.
+/.playwright-mcp
