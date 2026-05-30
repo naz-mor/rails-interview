@@ -53,6 +53,9 @@ class TodoListsController < ApplicationController
   end
 
   def todo_list_params
-    params.require(:todo_list).permit(:name)
+    params.require(:todo_list).permit(
+      :name,
+      todo_items_attributes: %i[id name completed _destroy]
+    )
   end
 end

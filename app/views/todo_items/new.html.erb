@@ -1,0 +1,12 @@
+<h2>New Item for "<%= @todo_list.name %>"</h2>
+
+<%= form_with model: [@todo_list, @todo_item], url: todo_list_todo_items_path(@todo_list) do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <%= f.submit 'Add Item' %>
+<% end %>
+
+<%= link_to 'Back to list', edit_todo_list_path(@todo_list) %>

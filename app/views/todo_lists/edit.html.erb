@@ -12,5 +12,19 @@
     <%= f.text_field :name %>
   </div>
 
+  <h3>Items</h3>
+
+  <%= link_to 'New Item', new_todo_list_todo_item_path(@todo_list) %>
+
+  <%= f.fields_for :todo_items do |item_f| %>
+    <div>
+      <%= item_f.check_box :completed, checked: item_f.object.completed? %>
+      <%= item_f.text_field :name %>
+      <%= item_f.hidden_field :id %>
+      <%= link_to 'Destroy', todo_list_todo_item_path(@todo_list, item_f.object),
+            data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete \"#{item_f.object.name}\"?" } %>
+    </div>
+  <% end %>
+
   <%= f.submit 'Update Todo List' %>
 <% end %>
