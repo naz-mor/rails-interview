@@ -48,6 +48,7 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
 * [add mutation coverage for timestamp boolean concern](https://pi.dev/session/#a5d1edb08016d366fd63e14e09b97c76)
 * [route root path to todolists](https://pi.dev/session/#5ad1b68fae19daaa504a23c883de6a8d)
 * [splitting base controllers for API and APP](https://pi.dev/session/#ff20020f2ad6bc3b91eadd044bbb99a0 )
+* [support todo list and item parity between API and APP](https://pi.dev/session/#76daf530166821f841c1848ce05d9d0c)
 
 ### Key decisions
 
