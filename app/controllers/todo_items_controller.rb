@@ -1,4 +1,4 @@
-class TodoItemsController < ApplicationController
+class TodoItemsController < App::ApplicationController
   before_action :set_todo_list
 
   def new

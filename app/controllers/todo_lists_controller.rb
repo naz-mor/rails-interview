@@ -1,4 +1,4 @@
-class TodoListsController < ApplicationController
+class TodoListsController < App::ApplicationController
   before_action :set_todo_list, only: %i[edit update destroy]
 
   # GET /todolists

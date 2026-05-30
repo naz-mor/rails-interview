@@ -47,9 +47,11 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
 * [harden controller mutation coverage](https://pi.dev/session/#ca00b2808a8c42ee8e4b72a8e96289de)
 * [add mutation coverage for timestamp boolean concern](https://pi.dev/session/#a5d1edb08016d366fd63e14e09b97c76)
 * [route root path to todolists](https://pi.dev/session/#5ad1b68fae19daaa504a23c883de6a8d)
+* [splitting base controllers for API and APP](https://pi.dev/session/#ff20020f2ad6bc3b91eadd044bbb99a0 )
 
 ### Key decisions
 
 * Use conventional commits: I observed it was being used when doing `git log`, I made it a standard for LLM agents by writing it down in the `AGENTS.md`.
 * Using mutant testing: I wanted better quality tests before starting the new work.
 * Routing the root path to todolists: It was very hard for a user to find the application without access to the source code.
+* Splitting the base controllers for the API and the APP controllers. The (skip_before_action :verify_authenticity_token) didn’t belong in the API TodoLists controller as it’s something essential to all potential API controller in our project, but we want to keep the protection for the app, therefore we need different base controllers.

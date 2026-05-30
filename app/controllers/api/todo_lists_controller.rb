@@ -1,6 +1,5 @@
 module Api
-  class TodoListsController < ApplicationController
-    skip_before_action :verify_authenticity_token
+  class TodoListsController < Api::ApplicationController
 
     # GET /api/todolists
     def index
