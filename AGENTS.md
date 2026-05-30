@@ -7,3 +7,7 @@ Before making changes or running project commands, read `AGENTS.local.md` if it 
 ## Commits
 
 Use Conventional Commits for all commit messages.
+
+## Feature parity
+
+Keep feature parity between API and APP controllers whenever it's applicable to the API and doesn't break backwards compatibility.
