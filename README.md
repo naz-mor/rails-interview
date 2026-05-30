@@ -38,7 +38,9 @@ We strongly believe in giving back :rocket:. Let's work together [`Get in touch`
 
 ### Pi Sessions
 
-* [instruct agents to use conventional commits and local pi guidance](https://pi.dev/session/#957edce427477e9881b21c6c47a04)
+All Pi sessions are stored under `sessions/`. OpenCode was also used but only to help with commit messages, so those sessions are not stored. For a more selective list you can use the one below.
+
+* [instruct agents to use conventional commits and local pi guidance](https://pi.dev/session/#957edce427477e9881b21c6c47a04037)
 * [ignore playwright mcp files](https://pi.dev/session/#7836934b2b408bfdbb67f76c80b28571)
 * [commit work during last interview](https://pi.dev/session/#c532bcf77b2b12e5176c65d1e99b3eca)
 
