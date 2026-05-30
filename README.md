@@ -44,6 +44,7 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
 * [ignore playwright mcp files](https://pi.dev/session/#7836934b2b408bfdbb67f76c80b28571)
 * [commit work during last interview](https://pi.dev/session/#c532bcf77b2b12e5176c65d1e99b3eca)
 * [add mutant configuration](https://pi.dev/session/#f8f2ef95278b70910f8d83c8675f1419)
+* [harden controller mutation coverage](https://pi.dev/session/#ca00b2808a8c42ee8e4b72a8e96289de)
 
 ### Key decisions
 
