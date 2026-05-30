@@ -3,7 +3,7 @@
 <div>
   <% @todo_lists.each do |todo_list| %>
     <div>
-      #<%= todo_list.id %> | <%= todo_list.name %>
+      #<%= todo_list.id %> | <%= todo_list.name %> | <%= link_to 'Edit', edit_todo_list_path(todo_list) %> | <%= button_to 'Destroy', todo_list_path(todo_list), method: :delete, data: { turbo_confirm: 'Are you sure you want to delete this todo list?' } %>
     </div>
   <% end %>
 </div>
