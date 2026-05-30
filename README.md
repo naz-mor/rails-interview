@@ -45,6 +45,7 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
 * [commit work during last interview](https://pi.dev/session/#c532bcf77b2b12e5176c65d1e99b3eca)
 * [add mutant configuration](https://pi.dev/session/#f8f2ef95278b70910f8d83c8675f1419)
 * [harden controller mutation coverage](https://pi.dev/session/#ca00b2808a8c42ee8e4b72a8e96289de)
+* [add mutation coverage for timestamp boolean concern](https://pi.dev/session/#a5d1edb08016d366fd63e14e09b97c76)
 
 ### Key decisions
 
