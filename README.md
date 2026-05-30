@@ -33,3 +33,7 @@ Check integration tests at: (https://github.com/crunchloop/interview-tests)
 ![crunchloop](https://s3.amazonaws.com/crunchloop.io/logo-blue.png)
 
 We strongly believe in giving back :rocket:. Let's work together [`Get in touch`](https://crunchloop.io/#contact).
+
+## Interview Sessions
+
+* [instruct agents to use conventional commits and local pi guidance](https://pi.dev/session/#957edce427477e9881b21c6c47a04037)
