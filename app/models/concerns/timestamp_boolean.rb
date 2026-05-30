@@ -1,7 +1,7 @@
 module TimestampBoolean
   extend ActiveSupport::Concern
 
-  class_methods do
+  module ClassMethods
     def timestamp_boolean(*attrs)
       attrs.each do |attr|
         timestamp_field = :"#{attr}_at"
@@ -11,7 +11,7 @@ module TimestampBoolean
         end
 
         define_method(:"#{attr}=") do |value|
-          if ActiveModel::Type::Boolean.new.cast(value).present?
+          if ActiveModel::Type::Boolean.new.cast(value)
             public_send(:"#{timestamp_field}=", public_send(timestamp_field) || Time.current)
           else
             public_send(:"#{timestamp_field}=", nil)
