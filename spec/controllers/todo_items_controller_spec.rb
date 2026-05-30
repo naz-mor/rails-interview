@@ -50,13 +50,34 @@ describe TodoItemsController do
         }.not_to change(TodoItem, :count)
       end
 
-      it 'renders new with unprocessable entity status' do
+      it 'renders the todo list edit page with unprocessable entity status' do
         post :create, params: { todo_list_id: todo_list.id, todo_item: { name: '' } }
 
         expect(response.status).to eq(422)
-        expect(response).to render_template(:new)
+        expect(response).to render_template('todo_lists/edit')
         expect(assigns(:todo_item).errors[:name]).to include("can't be blank")
       end
+    end
+  end
+
+  describe 'PATCH update' do
+    let!(:todo_item) { todo_list.todo_items.create!(name: 'Buy milk') }
+    let!(:other_todo_list) { TodoList.create!(name: 'Other List') }
+    let!(:other_todo_item) { other_todo_list.todo_items.create!(name: 'Leave alone') }
+
+    it 'updates the requested todo item' do
+      patch :update, params: { todo_list_id: todo_list.id, id: todo_item.id, todo_item: { name: 'Buy bread', completed: '1' } }
+
+      expect(todo_item.reload.name).to eq('Buy bread')
+      expect(todo_item.completed?).to be(true)
+      expect(other_todo_item.reload.name).to eq('Leave alone')
+    end
+
+    it 'redirects to the edit todo list page' do
+      patch :update, params: { todo_list_id: todo_list.id, id: todo_item.id, todo_item: { completed: '1' } }
+
+      expect(response).to redirect_to(edit_todo_list_path(todo_list))
+      expect(flash[:notice]).to eq('Todo item updated successfully.')
     end
   end
 

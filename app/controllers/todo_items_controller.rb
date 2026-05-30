@@ -11,8 +11,14 @@ class TodoItemsController < App::ApplicationController
     if @todo_item.save
       redirect_to edit_todo_list_path(@todo_list), notice: 'Todo item created successfully.'
     else
-      render :new, status: :unprocessable_entity
+      render 'todo_lists/edit', status: :unprocessable_entity
     end
+  end
+
+  def update
+    @todo_item = @todo_list.todo_items.find(params.require(:id))
+    @todo_item.update!(todo_item_params)
+    redirect_to edit_todo_list_path(@todo_list), notice: 'Todo item updated successfully.'
   end
 
   def destroy
@@ -28,6 +34,6 @@ class TodoItemsController < App::ApplicationController
   end
 
   def todo_item_params
-    params.require(:todo_item).permit(:name)
+    params.require(:todo_item).permit(:name, :completed)
   end
 end

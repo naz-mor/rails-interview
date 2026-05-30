@@ -54,6 +54,36 @@ describe Api::TodoItemsController do
     end
   end
 
+  describe 'PATCH update' do
+    let!(:todo_item) { todo_list.todo_items.create!(name: 'Buy milk') }
+    let!(:other_todo_list) { TodoList.create!(name: 'Other List') }
+    let!(:other_todo_item) { other_todo_list.todo_items.create!(name: 'Leave alone') }
+
+    it 'updates the requested todo item' do
+      patch :update, params: { todo_list_id: todo_list.id, id: todo_item.id, todo_item: { name: 'Buy bread', completed: '1' } }, format: :json
+
+      expect(todo_item.reload.name).to eq('Buy bread')
+      expect(todo_item.completed?).to be(true)
+      expect(other_todo_item.reload.name).to eq('Leave alone')
+    end
+
+    it 'returns the updated todo item' do
+      patch :update, params: { todo_list_id: todo_list.id, id: todo_item.id, todo_item: { name: 'Buy bread', completed: '1' } }, format: :json
+
+      body = JSON.parse(response.body)
+      expect(body['name']).to eq('Buy bread')
+      expect(body['completed']).to be(true)
+    end
+
+    it 'returns errors for invalid params' do
+      patch :update, params: { todo_list_id: todo_list.id, id: todo_item.id, todo_item: { name: '' } }, format: :json
+
+      body = JSON.parse(response.body)
+      expect(response.status).to eq(422)
+      expect(body['errors']['name']).to include("can't be blank")
+    end
+  end
+
   describe 'DELETE destroy' do
     let!(:todo_item) { todo_list.todo_items.create!(name: 'Buy milk') }
     let!(:other_todo_list) { TodoList.create!(name: 'Other List') }

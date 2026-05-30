@@ -3,6 +3,7 @@ class TodoListsController < App::ApplicationController
 
   # GET /todolists
   def index
+    @todo_list = TodoList.new
     @todo_lists = TodoList.all
   end
 
@@ -18,12 +19,14 @@ class TodoListsController < App::ApplicationController
     if @todo_list.save
       redirect_to todo_lists_path, notice: 'Todo list created successfully.'
     else
-      render :new, status: :unprocessable_entity
+      @todo_lists = TodoList.all
+      render :index, status: :unprocessable_entity
     end
   end
 
   # GET /todolists/:id/edit
   def edit
+    @todo_item = @todo_list.todo_items.build
   end
 
   # PATCH/PUT /todolists/:id
@@ -31,6 +34,7 @@ class TodoListsController < App::ApplicationController
     if @todo_list.update(todo_list_params)
       redirect_to todo_lists_path
     else
+      @todo_item = @todo_list.todo_items.build
       render :edit, status: :unprocessable_entity
     end
   end

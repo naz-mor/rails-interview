@@ -4,6 +4,10 @@
 
 This is a simple Todo List API built in Ruby on Rails 7. This project is currently being used for Ruby full-stack candidates.
 
+## Design
+
+Figma design: https://www.figma.com/design/eLY9H4h1aKQrDZg7XmPIHE/To-do-list-project?node-id=2-3&t=Fy2LShduijHFx3Si-0
+
 ## Build
 
 To build the application:
@@ -51,6 +55,8 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
 * [support todo list and item parity between API and APP](https://pi.dev/session/#76daf530166821f841c1848ce05d9d0c)
 * [run mutant for new API controller](https://pi.dev/session/#8c619c9fb10ca239e34505a6e40578f4)
 * [route /todo_items not /items](https://pi.dev/session/#3b72d947bacefcd68f8201def24c51a5)
+* implementing design
+  * [first draft](https://pi.dev/session/#b27930b9f12768ae06f93d560c568fc8)
 
 ### Key decisions
 
@@ -60,3 +66,4 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
 * Splitting the base controllers for the API and the APP controllers. The (skip_before_action :verify_authenticity_token) didn’t belong in the API TodoLists controller as it’s something essential to all potential API controller in our project, but we want to keep the protection for the app, therefore we need different base controllers.
 * Renaming nested item routes back to `todo_items`: We kept `todolists` for compatibility, but `items` had no such constraint and was less idiomatic than the Rails conventional `todo_items`, so I aligned both APP and API routes on the clearer name.
 * No Authorization: I decided to not add Authorization. It depends on the use this project will have whether we need it or not. Since so far it doesn't have Authorization, it might be that the applications runs locally for users. One might argue that if would be local the API wouldn't make sense, but the users might find it useful to setup local automations in their machines. For now it will remain out of scope.
+* Not using Inter as font: For simplicity and performance, we use the default font for system/browser.

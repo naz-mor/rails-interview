@@ -82,10 +82,10 @@ describe TodoListsController do
         }.not_to change(TodoList, :count)
       end
 
-      it 'renders new with unprocessable entity status' do
+      it 'renders index with unprocessable entity status' do
         post :create, params: { todo_list: { name: 'Existing List' } }
         expect(response.status).to eq(422)
-        expect(response).to render_template(:new)
+        expect(response).to render_template(:index)
       end
     end
   end

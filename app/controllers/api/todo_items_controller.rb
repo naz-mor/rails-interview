@@ -13,6 +13,17 @@ module Api
       end
     end
 
+    # PATCH/PUT /api/todolists/:todo_list_id/todo_items/:id
+    def update
+      @todo_item = @todo_list.todo_items.find(params.require(:id))
+
+      if @todo_item.update(todo_item_params)
+        render :show
+      else
+        render json: { errors: @todo_item.errors }, status: :unprocessable_entity
+      end
+    end
+
     # DELETE /api/todolists/:todo_list_id/todo_items/:id
     def destroy
       @todo_item = @todo_list.todo_items.find(params.require(:id))
@@ -26,7 +37,7 @@ module Api
     end
 
     def todo_item_params
-      params.require(:todo_item).permit(:name)
+      params.require(:todo_item).permit(:name, :completed)
     end
   end
 end
