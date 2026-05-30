@@ -34,8 +34,6 @@ module Api
     # DELETE /api/todolists/:id
     def destroy
       @todo_list.destroy
-
-      head :no_content
     end
 
     private

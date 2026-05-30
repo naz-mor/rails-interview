@@ -17,8 +17,6 @@ module Api
     def destroy
       @todo_item = @todo_list.todo_items.find(params.require(:id))
       @todo_item.destroy
-
-      head :no_content
     end
 
     private
