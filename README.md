@@ -50,6 +50,7 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
 * [splitting base controllers for API and APP](https://pi.dev/session/#ff20020f2ad6bc3b91eadd044bbb99a0 )
 * [support todo list and item parity between API and APP](https://pi.dev/session/#76daf530166821f841c1848ce05d9d0c)
 * [run mutant for new API controller](https://pi.dev/session/#8c619c9fb10ca239e34505a6e40578f4)
+* [route /todo_items not /items](https://pi.dev/session/#3b72d947bacefcd68f8201def24c51a5)
 
 ### Key decisions
 
@@ -57,3 +58,4 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
 * Using mutant testing: I wanted better quality tests before starting the new work.
 * Routing the root path to todolists: It was very hard for a user to find the application without access to the source code.
 * Splitting the base controllers for the API and the APP controllers. The (skip_before_action :verify_authenticity_token) didn’t belong in the API TodoLists controller as it’s something essential to all potential API controller in our project, but we want to keep the protection for the app, therefore we need different base controllers.
+* Renaming nested item routes back to `todo_items`: We kept `todolists` for compatibility, but `items` had no such constraint and was less idiomatic than the Rails conventional `todo_items`, so I aligned both APP and API routes on the clearer name.

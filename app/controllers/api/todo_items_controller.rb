@@ -2,7 +2,7 @@ module Api
   class TodoItemsController < Api::ApplicationController
     before_action :set_todo_list
 
-    # POST /api/todolists/:todo_list_id/items
+    # POST /api/todolists/:todo_list_id/todo_items
     def create
       @todo_item = @todo_list.todo_items.build(todo_item_params)
 
@@ -13,7 +13,7 @@ module Api
       end
     end
 
-    # DELETE /api/todolists/:todo_list_id/items/:id
+    # DELETE /api/todolists/:todo_list_id/todo_items/:id
     def destroy
       @todo_item = @todo_list.todo_items.find(params.require(:id))
       @todo_item.destroy
