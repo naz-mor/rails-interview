@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root 'todo_lists#index'
+
   namespace :api do
     resources :todo_lists, only: %i[index create], path: :todolists
   end
