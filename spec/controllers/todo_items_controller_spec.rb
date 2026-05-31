@@ -26,6 +26,13 @@ describe TodoItemsController do
         expect(response.body).to include('action="append" target="todo_items"')
         expect(response.body).to include('action="replace" target="new_todo_item"')
       end
+
+      it 'redirects to the edit todo list page for html requests' do
+        post :create, params: { todo_list_id: todo_list.id, todo_item: { name: 'Buy milk' } }
+
+        expect(response).to redirect_to(edit_todo_list_path(todo_list))
+        expect(flash[:notice]).to eq('Todo item created successfully.')
+      end
     end
 
     context 'with invalid params' do
@@ -46,6 +53,7 @@ describe TodoItemsController do
   end
 
   describe 'PATCH update' do
+    let!(:existing_todo_item) { todo_list.todo_items.create!(name: 'Already here') }
     let!(:todo_item) { todo_list.todo_items.create!(name: 'Buy milk') }
     let!(:other_todo_list) { TodoList.create!(name: 'Other List') }
     let!(:other_todo_item) { other_todo_list.todo_items.create!(name: 'Leave alone') }
@@ -55,6 +63,8 @@ describe TodoItemsController do
 
       expect(todo_item.reload.name).to eq('Buy bread')
       expect(todo_item.completed?).to be(true)
+      expect(existing_todo_item.reload.name).to eq('Already here')
+      expect(existing_todo_item.completed?).to be(false)
       expect(other_todo_item.reload.name).to eq('Leave alone')
     end
 

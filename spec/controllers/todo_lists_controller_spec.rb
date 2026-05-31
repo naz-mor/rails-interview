@@ -57,6 +57,13 @@ describe TodoListsController do
         expect(response.body).to include('action="append" target="todo_lists"')
         expect(response.body).to include('action="replace" target="new_todo_list"')
       end
+
+      it 'redirects to the todo lists index for html requests' do
+        post :create, params: { todo_list: { name: 'New List' } }
+
+        expect(response).to redirect_to(todo_lists_path)
+        expect(flash[:notice]).to eq('Todo list created successfully.')
+      end
     end
 
     context 'with invalid params' do

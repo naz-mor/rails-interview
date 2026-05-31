@@ -4,7 +4,14 @@ class TodoItemsController < App::ApplicationController
   def create
     @todo_item = @todo_list.todo_items.build(todo_item_params)
 
-    render :new, status: :unprocessable_entity unless @todo_item.save
+    if @todo_item.save
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to edit_todo_list_path(@todo_list), notice: 'Todo item created successfully.' }
+      end
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def update
