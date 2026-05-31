@@ -65,6 +65,7 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
 * [restore HTML responses](https://pi.dev/session/#169b431e98dad73f89256515e54c7618)
 * [post interview ask: add a complete all action](https://pi.dev/session/#2fca8db64303862cc389902e8e4ec543)
   * [add an ugly white circle to fix contrast issues](https://pi.dev/session/#eeb2ca1d26786acc4966ca0b247fec50)
+  * [post interview ask: make the action non-blocking](https://pi.dev/session/#691e5aa67681afef0925bb1a52bf7d49)
 * pagination
   * [UI foundation](https://pi.dev/session/#a4f0ad204a230f940b4713ea384305d5)
   * [API support for pagination](https://pi.dev/session/#2f7df604dbc21f7b7a2da8f34f25d3cd)
