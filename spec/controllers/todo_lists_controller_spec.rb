@@ -16,7 +16,7 @@ describe TodoListsController do
 
       get :index
 
-      expect(assigns(:todo_lists).to_a).to eq(TodoList.order(:id).limit(10).to_a)
+      expect(assigns(:todo_lists).to_a).to eq(TodoList.ordered_by_recently_updated.limit(10).to_a)
     end
 
     it 'uses the requested page and page size' do
@@ -24,7 +24,7 @@ describe TodoListsController do
 
       get :index, params: { page: 2, per_page: 5 }
 
-      expect(assigns(:todo_lists).to_a).to eq(TodoList.order(:id).offset(5).limit(5).to_a)
+      expect(assigns(:todo_lists).to_a).to eq(TodoList.ordered_by_recently_updated.offset(5).limit(5).to_a)
     end
 
     it 'renders a lazy next-page frame when more todo lists exist' do
@@ -44,7 +44,7 @@ describe TodoListsController do
       get :index, params: { page: 2, per_page: 5 }
 
       expect(response.body).to include('id="todo_lists_page_2"')
-      expect(response.body).to include(TodoList.order(:id).offset(5).first.name)
+      expect(response.body).to include(TodoList.ordered_by_recently_updated.offset(5).first.name)
       expect(response.body).to include('id="todo_lists_page_3"')
     end
 
@@ -81,12 +81,12 @@ describe TodoListsController do
         expect(todo_item.completed?).to be(true)
       end
 
-      it 'appends the todo list and replaces the inline form for turbo stream requests' do
+      it 'prepends the todo list and replaces the inline form for turbo stream requests' do
         post :create, params: { todo_list: { name: 'New List' } }, format: :turbo_stream
 
         expect(response.media_type).to eq(Mime[:turbo_stream].to_s)
         expect(response).to render_template(:create)
-        expect(response.body).to include('action="append" target="todo_lists"')
+        expect(response.body).to include('action="prepend" target="todo_lists"')
         expect(response.body).to include('action="replace" target="new_todo_list"')
       end
 

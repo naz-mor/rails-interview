@@ -3,7 +3,7 @@ class TodoListsController < App::ApplicationController
 
   # GET /todolists
   def index
-    @todo_lists = paginate(TodoList.order(:id))
+    @todo_lists = paginate(TodoList.ordered_by_recently_updated)
 
     respond_to do |format|
       format.html do

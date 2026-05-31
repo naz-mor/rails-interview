@@ -41,6 +41,16 @@ describe TodoList do
     end
   end
 
+  describe '.ordered_by_recently_updated' do
+    it 'orders todo lists from newest to oldest updated_at' do
+      old_list = TodoList.create!(name: 'Old List', created_at: 3.days.ago, updated_at: 3.days.ago)
+      new_list = TodoList.create!(name: 'New List', created_at: 1.day.ago, updated_at: 1.day.ago)
+      middle_list = TodoList.create!(name: 'Middle List', created_at: 2.days.ago, updated_at: 2.days.ago)
+
+      expect(TodoList.ordered_by_recently_updated).to eq([new_list, middle_list, old_list])
+    end
+  end
+
   describe 'associations' do
     let(:todo_list) { TodoList.create!(name: 'My List') }
 

@@ -4,7 +4,7 @@ module Api
 
     # GET /api/todolists
     def index
-      @todo_lists = paginate(TodoList.order(:id))
+      @todo_lists = paginate(TodoList.ordered_by_recently_updated)
     end
 
     # GET /api/todolists/:id

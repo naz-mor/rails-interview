@@ -1,5 +1,5 @@
 <%= turbo_stream.remove "empty_todo_lists" %>
-<%= turbo_stream.append "todo_lists", partial: "todo_list", locals: { todo_list: @todo_list } %>
+<%= turbo_stream.prepend "todo_lists", partial: "todo_list", locals: { todo_list: @todo_list } %>
 <%= turbo_stream.replace "new_todo_list" do %>
   <%= render "inline_form", todo_list: TodoList.new %>
 <% end %>

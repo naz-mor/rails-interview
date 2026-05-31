@@ -44,8 +44,10 @@ RSpec.describe 'Todo lists', type: :system do
       expect(page).to have_text('No lists have been entered yet')
     end
 
-    it 'lists todo lists and paginates them' do
-      12.times { |index| TodoList.create!(name: format('List %02d', index)) }
+    it 'lists todo lists from newest to oldest updated_at and paginates them' do
+      12.times do |index|
+        TodoList.create!(name: format('List %02d', index), created_at: index.days.ago, updated_at: index.days.ago)
+      end
 
       visit todo_lists_path(per_page: 5)
 

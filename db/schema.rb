@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_05_31_000000) do
+ActiveRecord::Schema[7.0].define(version: 2026_05_31_000001) do
   create_table "todo_items", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "completed_at"
@@ -22,6 +22,8 @@ ActiveRecord::Schema[7.0].define(version: 2026_05_31_000000) do
 
   create_table "todo_lists", force: :cascade do |t|
     t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["name"], name: "index_todo_lists_on_name", unique: true
     t.check_constraint "length(trim(name)) > 0", name: "todo_lists_name_presence"
   end

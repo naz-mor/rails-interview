@@ -48,7 +48,7 @@ describe Api::TodoListsController do
         get :index, format: :json
 
         todo_lists = JSON.parse(response.body)
-        expect(todo_lists.map { |list| list['id'] }).to eq(TodoList.order(:id).limit(10).pluck(:id))
+        expect(todo_lists.map { |list| list['id'] }).to eq(TodoList.ordered_by_recently_updated.limit(10).pluck(:id))
       end
 
       it 'uses the requested page and page size' do
@@ -57,7 +57,7 @@ describe Api::TodoListsController do
         get :index, params: { page: 2, per_page: 5 }, format: :json
 
         todo_lists = JSON.parse(response.body)
-        expect(todo_lists.map { |list| list['id'] }).to eq(TodoList.order(:id).offset(5).limit(5).pluck(:id))
+        expect(todo_lists.map { |list| list['id'] }).to eq(TodoList.ordered_by_recently_updated.offset(5).limit(5).pluck(:id))
       end
     end
   end
