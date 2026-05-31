@@ -92,12 +92,22 @@ The main container should have:
 
 ## Error states
 
-Errors should appear inside a container with:
+Errors should appear as a closable overlay anchored to the bottom of the viewport.
+
+The overlay should:
+
+- Be fixed to the bottom of the screen
+- Span the available viewport width
+- Center the error container horizontally
+- Include comfortable viewport padding
+
+The error container should have:
 
 - White background
-- Error color `#CC3D3D` for text and border
+- Error color `#CC3D3D` for text, border, and close control
 - `4px` border
 - `36px` border radius
+- A close button in the top-right corner
 
 ## Inputs
 

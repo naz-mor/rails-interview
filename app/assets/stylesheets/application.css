@@ -111,12 +111,44 @@ input {
   cursor: pointer;
 }
 
+.error-overlay {
+  position: fixed;
+  z-index: 1000;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 48px 24px;
+}
+
 .error-box {
-  padding: 24px 32px;
+  position: relative;
+  width: min(100%, 900px);
+  max-height: 100%;
+  overflow-y: auto;
+  padding: 64px 72px 48px;
   border: 4px solid var(--todo-error);
   border-radius: 36px;
   background: var(--todo-white);
   color: var(--todo-error);
+  box-shadow: 0 12px 40px rgba(30, 30, 30, 0.24);
+}
+
+.error-box__close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--todo-error);
+  font-size: 44px;
+  line-height: 1;
+  cursor: pointer;
 }
 
 .error-box p {
@@ -230,6 +262,14 @@ input {
 
   .todo-panel__body {
     padding: 28px 18px;
+  }
+
+  .error-overlay {
+    padding: 24px 12px;
+  }
+
+  .error-box {
+    padding: 56px 28px 32px;
   }
 
   .text-input,

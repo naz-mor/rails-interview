@@ -58,6 +58,7 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
 * implementing design
   * [first draft](https://pi.dev/session/#b27930b9f12768ae06f93d560c568fc8)
   * [refactor non-conventional controllers](https://pi.dev/session/#65f55a2312bfa6fce48a4a31dcb00e22)
+  * [improve error message UI](https://pi.dev/session/#21f5c74fcb3bcaaff4b9bb27616ca677)
 * [add name presence validation to todo lists](https://pi.dev/session/#325f435b830cda960e1c2650c36d283e)
 * [post-interview ask: deletion of items shouldn't refresh the whole page](https://pi.dev/session/#11ca901ce3889b4a68fa04e66986703f)
 * [restore HTML responses](https://pi.dev/session/#169b431e98dad73f89256515e54c7618)
