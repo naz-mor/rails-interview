@@ -1,0 +1,9 @@
+<%= turbo_frame_tag dom_id(todo_list, :name), class: "todo-list-name-frame" do %>
+  <h1 class="todo-list-name">
+    <%= link_to todo_list.name,
+                edit_todo_list_name_path(todo_list),
+                class: "todo-list-name__link",
+                data: { turbo_frame: dom_id(todo_list, :name) },
+                aria: { label: "Edit #{todo_list.name} name" } %>
+  </h1>
+<% end %>

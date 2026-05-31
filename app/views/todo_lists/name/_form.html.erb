@@ -1,0 +1,24 @@
+<%= turbo_frame_tag dom_id(todo_list, :name), class: "todo-list-name-frame" do %>
+  <%= form_with model: todo_list, url: todo_list_name_path(todo_list), method: :patch, class: "todo-list-name-form" do |f| %>
+    <% if todo_list.errors.any? %>
+      <div class="todo-list-name-form__errors" role="alert" aria-live="assertive">
+        <% todo_list.errors.full_messages.each do |message| %>
+          <p><%= message %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%= f.text_field :name,
+                     class: "todo-list-name-form__input",
+                     aria: { label: "Todo list name" },
+                     autofocus: true %>
+
+    <div class="todo-list-name-form__overlay" aria-label="Name edit actions">
+      <%= f.submit "Save", class: "todo-list-name-form__button todo-list-name-form__button--save", data: { turbo_submits_with: "Saving…" } %>
+      <%= link_to "Cancel",
+                  edit_todo_list_path(todo_list),
+                  class: "todo-list-name-form__button todo-list-name-form__button--cancel",
+                  data: { turbo_frame: dom_id(todo_list, :name) } %>
+    </div>
+  <% end %>
+<% end %>

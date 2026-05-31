@@ -1,7 +1,7 @@
 <main class="page-shell">
   <section class="todo-panel">
     <header class="todo-panel__header todo-panel__header--with-action">
-      <h1><%= @todo_list.name %></h1>
+      <%= render "todo_lists/name/show", todo_list: @todo_list %>
       <%= render "complete_all", todo_list: @todo_list %>
     </header>
 

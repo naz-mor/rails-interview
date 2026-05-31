@@ -71,6 +71,7 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
   * [API support for pagination](https://pi.dev/session/#2f7df604dbc21f7b7a2da8f34f25d3cd)
   * [Refactor to start moving actions to items controller](https://pi.dev/session/#1ab73094019d47769f951647776fa586)
   * [Implement infinite pagination](https://pi.dev/session/#abbeedcd9576f39956f1db8a5cca9008)
+* [Title editing support](https://pi.dev/session/#7207fbe63e6cd4a92bc3b44ab2a9aafb)
 
 ### Key decisions
 
@@ -84,6 +85,7 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
 * Adding name presence validations to TodoList.
 * I decided to order items in a todo list by the completed attribute and the creation of the item. 
 * System tests: Asked GPT to create some system tests, I didn't spend effort there, but consider to be nice to have at least something.
+* I decided to support todo list editing.
 
 ### Out of scope
 
