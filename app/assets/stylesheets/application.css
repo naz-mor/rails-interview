@@ -53,6 +53,13 @@ input {
   background: var(--todo-black);
 }
 
+.todo-panel__header--with-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
 .todo-panel__header h1 {
   margin: 0;
   font-style: normal;
@@ -236,6 +243,37 @@ input {
   display: inline-block;
   border: 4px solid var(--todo-black);
   border-radius: 50%;
+}
+
+.unchecked-circle--light {
+  border-color: var(--todo-white);
+}
+
+.complete-all-action {
+  flex: 0 0 auto;
+}
+
+.complete-all-action__circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--todo-white);
+}
+
+.complete-all-action__circle .button_to {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.complete-all-button,
+.complete-all-button img {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
 }
 
 .icon-button,

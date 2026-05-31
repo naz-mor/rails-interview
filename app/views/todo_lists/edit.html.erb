@@ -1,7 +1,10 @@
 <main class="page-shell">
   <section class="todo-panel">
-    <header class="todo-panel__header">
+    <% persisted_items = @todo_list.todo_items.select(&:persisted?) %>
+
+    <header class="todo-panel__header todo-panel__header--with-action">
       <h1><%= @todo_list.name %></h1>
+      <%= render "complete_all", todo_list: @todo_list %>
     </header>
 
     <div class="todo-panel__body">
@@ -16,7 +19,6 @@
       <%= render "todo_items/inline_form", todo_list: @todo_list, todo_item: @todo_list.todo_items.build %>
 
       <div class="items-list" id="todo_items">
-        <% persisted_items = @todo_list.todo_items.select(&:persisted?) %>
         <% if persisted_items.empty? %>
           <p class="empty-state" id="empty_todo_items">No tasks have been entered yet</p>
         <% else %>

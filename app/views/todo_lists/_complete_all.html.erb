@@ -1,0 +1,14 @@
+<% persisted_items = todo_list.todo_items.select(&:persisted?) %>
+<% all_items_completed = persisted_items.any? && persisted_items.first.completed? %>
+
+<div id="<%= dom_id(todo_list, :complete_all) %>" class="complete-all-action">
+  <div class="complete-all-action__circle">
+    <%= button_to todo_list_complete_all_path(todo_list), class: "completion-button complete-all-button completion-button--#{all_items_completed ? 'checked' : 'unchecked'}", disabled: all_items_completed, data: { turbo_submits_with: "Completing…" } do %>
+      <% if all_items_completed %>
+        <%= image_tag "checked.png", alt: "All tasks completed" %>
+      <% else %>
+        <span class="unchecked-circle" aria-label="Complete all tasks"></span>
+      <% end %>
+    <% end %>
+  </div>
+</div>

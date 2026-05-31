@@ -63,6 +63,8 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
 * [add name presence validation to todo lists](https://pi.dev/session/#325f435b830cda960e1c2650c36d283e)
 * [post-interview ask: deletion of items shouldn't refresh the whole page](https://pi.dev/session/#11ca901ce3889b4a68fa04e66986703f)
 * [restore HTML responses](https://pi.dev/session/#169b431e98dad73f89256515e54c7618)
+* [post interview ask: add a complete all action](https://pi.dev/session/#2fca8db64303862cc389902e8e4ec543)
+  * [add an ugly white circle to fix contrast issues](https://pi.dev/session/#eeb2ca1d26786acc4966ca0b247fec50)
 
 ### Key decisions
 

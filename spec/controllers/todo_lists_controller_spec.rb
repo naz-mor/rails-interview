@@ -113,6 +113,23 @@ describe TodoListsController do
       expect(item_positions).to eq(item_positions.sort)
     end
 
+    it 'renders the complete-all icon as unchecked when there are incomplete items' do
+      todo_list.todo_items.create!(name: 'Buy milk')
+
+      get :edit, params: { id: todo_list.id }
+
+      expect(response.body).to include('aria-label="Complete all tasks"')
+    end
+
+    it 'renders the complete-all icon as checked and disabled when all items are completed' do
+      todo_list.todo_items.create!(name: 'Buy milk', completed: true)
+
+      get :edit, params: { id: todo_list.id }
+
+      expect(response.body).to include('alt="All tasks completed"')
+      expect(response.body).to include('disabled="disabled"')
+    end
+
     it 'rejects unsupported formats' do
       expect { get :edit, params: { id: todo_list.id }, format: :json }.to raise_error(
         ActionController::RoutingError,

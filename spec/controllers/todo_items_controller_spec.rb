@@ -18,13 +18,14 @@ describe TodoItemsController do
         expect(todo_list.todo_items.last.name).to eq('Buy milk')
       end
 
-      it 'prepends the todo item and replaces the inline form for turbo stream requests' do
+      it 'prepends the todo item and replaces the inline form and complete-all button for turbo stream requests' do
         post :create, params: { todo_list_id: todo_list.id, todo_item: { name: 'Buy milk' } }, format: :turbo_stream
 
         expect(response.media_type).to eq(Mime[:turbo_stream].to_s)
         expect(response).to render_template(:create)
         expect(response.body).to include('action="prepend" target="todo_items"')
         expect(response.body).to include('action="replace" target="new_todo_item"')
+        expect(response.body).to include("action=\"replace\" target=\"complete_all_todo_list_#{todo_list.id}\"")
       end
 
       it 'redirects to the edit todo list page for html requests' do

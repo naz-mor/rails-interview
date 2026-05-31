@@ -120,6 +120,13 @@ Inputs should have:
 
 When an add button is paired with an input, the button should be aligned to the right inside the input area.
 
+Form actions should provide Turbo submit feedback where applicable:
+
+- Add list/task: `Adding…`
+- Toggle task completion: `Saving…`
+- Delete list/task: `Deleting…`
+- Complete all tasks: `Completing…`
+
 ## Assets
 
 The current logo/icon assets come from `tmp/images/` and are used as visual references/assets:
@@ -141,6 +148,17 @@ The todo list edit page follows the shared main container standard.
 
 - The main title is the name of the todo list.
 - For now, the title cannot be changed.
+- The header uses the with-action layout when task completion controls are present:
+  - Center the title and the action together.
+  - Align items vertically in the center.
+  - Use `20px` spacing between the title and the action.
+- A complete-all action appears next to the title.
+- The complete-all action sits inside a white circular background that is slightly larger than the action button.
+- The white circular background is `60px` in diameter.
+- The complete-all action uses a `48px` square completion button centered inside the white circle.
+- When there are incomplete tasks, the action shows an unchecked custom-black circle and can be submitted to mark every task in the list complete.
+- When all persisted tasks are complete, the action shows the checked icon, uses the checked completion state, and is disabled.
+- After a new task is added with Turbo Streams, the complete-all action should be replaced so its checked/unchecked and disabled state stays current without a full-page refresh.
 
 ### Add task input
 
