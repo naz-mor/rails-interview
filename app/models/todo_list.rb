@@ -3,5 +3,5 @@ class TodoList < ApplicationRecord
 
   accepts_nested_attributes_for :todo_items, allow_destroy: true
 
-  validates :name, uniqueness: true
+  validates :name, presence: true, uniqueness: true
 end

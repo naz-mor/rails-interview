@@ -6,12 +6,38 @@ describe TodoList do
       expect(TodoList.new(name: 'My List')).to be_valid
     end
 
+    it 'is invalid without a name' do
+      todo_list = TodoList.new
+
+      expect(todo_list).not_to be_valid
+      expect(todo_list.errors[:name]).to include("can't be blank")
+    end
+
+    it 'is invalid with a blank name' do
+      todo_list = TodoList.new(name: '   ')
+
+      expect(todo_list).not_to be_valid
+      expect(todo_list.errors[:name]).to include("can't be blank")
+    end
+
     it 'is invalid when name is duplicated' do
       TodoList.create!(name: 'My List')
       duplicate = TodoList.new(name: 'My List')
 
       expect(duplicate).not_to be_valid
       expect(duplicate.errors[:name]).to include('has already been taken')
+    end
+
+    it 'requires name at the database level' do
+      expect {
+        TodoList.connection.execute("INSERT INTO todo_lists (name) VALUES (NULL)")
+      }.to raise_error(ActiveRecord::StatementInvalid)
+    end
+
+    it 'requires a non-blank name at the database level' do
+      expect {
+        TodoList.connection.execute("INSERT INTO todo_lists (name) VALUES ('   ')")
+      }.to raise_error(ActiveRecord::StatementInvalid)
     end
   end
 

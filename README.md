@@ -57,6 +57,7 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
 * [route /todo_items not /items](https://pi.dev/session/#3b72d947bacefcd68f8201def24c51a5)
 * implementing design
   * [first draft](https://pi.dev/session/#b27930b9f12768ae06f93d560c568fc8)
+* [add name presence validation to todo lists](https://pi.dev/session/#325f435b830cda960e1c2650c36d283e)
 
 ### Key decisions
 
@@ -67,3 +68,4 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
 * Renaming nested item routes back to `todo_items`: We kept `todolists` for compatibility, but `items` had no such constraint and was less idiomatic than the Rails conventional `todo_items`, so I aligned both APP and API routes on the clearer name.
 * No Authorization: I decided to not add Authorization. It depends on the use this project will have whether we need it or not. Since so far it doesn't have Authorization, it might be that the applications runs locally for users. One might argue that if would be local the API wouldn't make sense, but the users might find it useful to setup local automations in their machines. For now it will remain out of scope.
 * Not using Inter as font: For simplicity and performance, we use the default font for system/browser.
+* Adding name presence validations to TodoList.
