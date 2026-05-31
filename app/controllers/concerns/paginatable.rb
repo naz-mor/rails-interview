@@ -9,7 +9,9 @@ module Paginatable
     @per_page = per_page
 
     records = scope.offset((@current_page - 1) * @per_page).limit(@per_page + 1).to_a
-    @next_page = records.size > @per_page ? @current_page + 1 : nil
+    @next_page = if records.size > @per_page
+      @current_page + 1
+    end
 
     records.first(@per_page)
   end

@@ -6,9 +6,13 @@ describe TodoListsController do
   describe 'GET index' do
     let!(:todo_list) { TodoList.create!(name: 'My List') }
 
-    it 'returns a success code' do
+    it 'returns a success code and renders the full index page' do
       get :index
+
       expect(response.status).to eq(200)
+      expect(response).to render_template(:index)
+      expect(response.body).to include('<h1>Todo Lists</h1>')
+      expect(response.body).to include('id="new_todo_list"')
     end
 
     it 'assigns todo lists with the default page size' do
@@ -257,6 +261,16 @@ describe TodoListsController do
   end
 
   describe 'private helpers' do
+    describe '#pagination_locals' do
+      it 'returns the current pagination state' do
+        controller.instance_variable_set(:@current_page, 2)
+        controller.instance_variable_set(:@next_page, 3)
+        controller.instance_variable_set(:@per_page, 5)
+
+        expect(controller.send(:pagination_locals)).to eq(page: 2, next_page: 3, per_page: 5)
+      end
+    end
+
     describe '#set_todo_list' do
       it 'loads the requested todo list' do
         TodoList.create!(name: 'Other List')

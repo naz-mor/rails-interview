@@ -126,9 +126,28 @@ describe TodoItemsController do
       expect(response.body).to include('action="replace" target="todo_items"')
       expect(response.body).to include("action=\"replace\" target=\"complete_all_todo_list_#{todo_list.id}\"")
     end
+
+    it 'renders new with unprocessable entity status when invalid' do
+      patch :update, params: { todo_list_id: todo_list.id, id: todo_item.id, todo_item: { name: '' } }
+
+      expect(response.status).to eq(422)
+      expect(response).to render_template(:new)
+      expect(todo_item.reload.name).to eq('Buy milk')
+      expect(assigns(:todo_item).errors[:name]).to include("can't be blank")
+    end
   end
 
   describe 'private helpers' do
+    describe '#pagination_locals' do
+      it 'returns the current pagination state' do
+        controller.instance_variable_set(:@current_page, 2)
+        controller.instance_variable_set(:@next_page, 3)
+        controller.instance_variable_set(:@per_page, 5)
+
+        expect(controller.send(:pagination_locals)).to eq(page: 2, next_page: 3, per_page: 5)
+      end
+    end
+
     describe '#set_todo_list' do
       it 'loads the requested todo list' do
         TodoList.create!(name: 'Other List')

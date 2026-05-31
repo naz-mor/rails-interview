@@ -1,6 +1,4 @@
-require 'active_support/all'
-require 'active_model'
-require_relative '../../../app/models/concerns/timestamp_boolean'
+require 'rails_helper'
 
 RSpec.describe TimestampBoolean do
   subject(:record) { model_class.new }
@@ -73,6 +71,76 @@ RSpec.describe TimestampBoolean do
 
       expect(record.archived_at).to eq(now)
       expect(record.published_at).to be_nil
+    end
+  end
+
+  describe '.timestamp_boolean' do
+    let(:active_record_class) do
+      Class.new(ApplicationRecord) do
+        self.table_name = 'todo_items'
+
+        include TimestampBoolean
+
+        timestamp_boolean :completed
+      end
+    end
+
+    it 'defines a timestamp-backed ordering scope on Active Record models' do
+      expect(active_record_class).to respond_to(:ordered_by_completed)
+    end
+
+    it 'orders records with nil timestamps before present timestamps by default' do
+      todo_list = TodoList.create!(name: 'My List')
+      incomplete = active_record_class.create!(name: 'Incomplete', todo_list_id: todo_list.id)
+      complete = active_record_class.create!(name: 'Complete', todo_list_id: todo_list.id, completed_at: Time.current)
+
+      expect(active_record_class.ordered_by_completed.to_a).to eq([incomplete, complete])
+    end
+
+    it 'orders records with present timestamps before nil timestamps when descending' do
+      todo_list = TodoList.create!(name: 'My List')
+      incomplete = active_record_class.create!(name: 'Incomplete', todo_list_id: todo_list.id)
+      complete = active_record_class.create!(name: 'Complete', todo_list_id: todo_list.id, completed_at: Time.current)
+
+      expect(active_record_class.ordered_by_completed(:desc).to_a).to eq([complete, incomplete])
+    end
+
+    it 'uses ascending order when the generated scope is called without a direction' do
+      expect(active_record_class.ordered_by_completed.to_sql).to include('END ASC')
+    end
+
+    it 'passes the generated scope direction to the timestamp ordering method' do
+      allow(active_record_class).to receive(:order_by_timestamp_boolean).with(:completed, :desc).and_call_original
+
+      active_record_class.ordered_by_completed(:desc).load
+
+      expect(active_record_class).to have_received(:order_by_timestamp_boolean).with(:completed, :desc)
+    end
+  end
+
+  describe '.order_by_timestamp_boolean' do
+    it 'quotes the requested timestamp column and uses the requested direction' do
+      relation = TodoItem.order_by_timestamp_boolean(:completed, :desc)
+
+      expect(relation.to_sql).to include('"todo_items"."completed_at" IS NULL')
+      expect(relation.to_sql).to include('END DESC')
+    end
+
+    it 'uses ascending order by default' do
+      expect(TodoItem.order_by_timestamp_boolean(:completed).to_sql).to include('END ASC')
+    end
+
+    it 'accepts string directions' do
+      relation = TodoItem.order_by_timestamp_boolean(:completed, 'asc')
+
+      expect(relation.to_sql).to include('END ASC')
+    end
+
+    it 'rejects unsupported directions' do
+      expect { TodoItem.order_by_timestamp_boolean(:completed, :sideways) }.to raise_error(
+        ArgumentError,
+        'direction must be :asc or :desc'
+      )
     end
   end
 end

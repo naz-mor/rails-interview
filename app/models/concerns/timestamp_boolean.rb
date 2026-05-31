@@ -28,7 +28,7 @@ module TimestampBoolean
 
       timestamp_field = connection.quote_column_name("#{attr}_at")
 
-      order(Arel.sql("CASE WHEN #{quoted_table_name}.#{timestamp_field} IS NULL THEN 0 ELSE 1 END #{direction.to_s.upcase}"))
+      order(Arel.sql("CASE WHEN #{quoted_table_name}.#{timestamp_field} IS NULL THEN 0 ELSE 1 END #{direction.upcase}"))
     end
   end
 end

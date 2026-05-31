@@ -76,6 +76,7 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
 * [adding the possibility to redirect back](https://pi.dev/session/#ee5f2ca4011e2f8568e4cd7af140e7ad)
 * [adding seed data](https://pi.dev/session/#46810db310f1c1fdf49e2b5d4bfb1f2e)
 * [order from latest to oldest in todo lists index page](https://pi.dev/session/#3728fdcb2f1a5a023ac8cc8d188b8fc4)
+* [mutant run](https://pi.dev/session/#a5a2bdf461a35b5b67517f01a40eb324)
 
 ### Key decisions
 
