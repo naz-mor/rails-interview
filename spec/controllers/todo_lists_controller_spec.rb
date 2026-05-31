@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe TodoListsController do
+  render_views
+
   describe 'GET index' do
     let!(:todo_list) { TodoList.create!(name: 'My List') }
 
@@ -45,14 +47,8 @@ describe TodoListsController do
     context 'with valid params' do
       it 'creates a new todo list' do
         expect {
-          post :create, params: { todo_list: { name: 'New List' } }
+          post :create, params: { todo_list: { name: 'New List' } }, format: :turbo_stream
         }.to change(TodoList, :count).by(1)
-      end
-
-      it 'redirects to the todo lists index' do
-        post :create, params: { todo_list: { name: 'New List' } }
-        expect(response).to redirect_to(todo_lists_path)
-        expect(flash[:notice]).to eq('Todo list created successfully.')
       end
 
       it 'creates nested todo items with permitted attributes' do
@@ -63,13 +59,22 @@ describe TodoListsController do
               { name: 'First item', completed: '1' }
             ]
           }
-        }
+        }, format: :turbo_stream
 
         todo_list = TodoList.find_by!(name: 'New List')
         todo_item = todo_list.todo_items.first!
 
         expect(todo_item.name).to eq('First item')
         expect(todo_item.completed?).to be(true)
+      end
+
+      it 'appends the todo list and replaces the inline form for turbo stream requests' do
+        post :create, params: { todo_list: { name: 'New List' } }, format: :turbo_stream
+
+        expect(response.media_type).to eq(Mime[:turbo_stream].to_s)
+        expect(response).to render_template(:create)
+        expect(response.body).to include('action="append" target="todo_lists"')
+        expect(response.body).to include('action="replace" target="new_todo_list"')
       end
     end
 
@@ -82,10 +87,11 @@ describe TodoListsController do
         }.not_to change(TodoList, :count)
       end
 
-      it 'renders index with unprocessable entity status' do
+      it 'renders new with unprocessable entity status' do
         post :create, params: { todo_list: { name: 'Existing List' } }
+
         expect(response.status).to eq(422)
-        expect(response).to render_template(:index)
+        expect(response).to render_template(:new)
       end
     end
   end

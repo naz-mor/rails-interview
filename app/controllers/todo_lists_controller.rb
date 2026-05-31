@@ -17,10 +17,11 @@ class TodoListsController < App::ApplicationController
     @todo_list = TodoList.new(todo_list_params)
 
     if @todo_list.save
-      redirect_to todo_lists_path, notice: 'Todo list created successfully.'
+      respond_to do |format|
+        format.turbo_stream
+      end
     else
-      @todo_lists = TodoList.all
-      render :index, status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 

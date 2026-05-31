@@ -1,0 +1,6 @@
+<article class="todo-row" id="<%= dom_id(todo_list) %>">
+  <%= link_to todo_list.name, edit_todo_list_path(todo_list), class: "todo-row__text todo-row__link" %>
+  <%= button_to todo_list_path(todo_list), method: :delete, class: "icon-button", form: { data: { turbo_confirm: "Are you sure you want to delete \"#{todo_list.name}\"?" } } do %>
+    <%= image_tag "delete.png", alt: "Delete #{todo_list.name}" %>
+  <% end %>
+</article>
