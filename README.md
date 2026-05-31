@@ -16,6 +16,10 @@ https://github.com/user-attachments/assets/959d5e59-b72d-4b3a-bb2c-126d7687f201
 
 https://github.com/user-attachments/assets/be225f3a-e1b4-4758-8403-dc6237fdae7e
 
+### Change Name
+
+https://github.com/user-attachments/assets/9e1eefb7-7abb-4d77-824f-3b3b290833d6
+
 See below for LLM sessions and key decisions.
 
 ## Design
