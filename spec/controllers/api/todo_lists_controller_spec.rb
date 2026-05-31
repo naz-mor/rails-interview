@@ -41,6 +41,24 @@ describe Api::TodoListsController do
           expect(todo_lists[0]['name']).to eq(todo_list.name)
         end
       end
+
+      it 'uses the default page size' do
+        10.times { |index| TodoList.create!(name: "List #{index}") }
+
+        get :index, format: :json
+
+        todo_lists = JSON.parse(response.body)
+        expect(todo_lists.map { |list| list['id'] }).to eq(TodoList.order(:id).limit(10).pluck(:id))
+      end
+
+      it 'uses the requested page and page size' do
+        12.times { |index| TodoList.create!(name: "List #{index}") }
+
+        get :index, params: { page: 2, per_page: 5 }, format: :json
+
+        todo_lists = JSON.parse(response.body)
+        expect(todo_lists.map { |list| list['id'] }).to eq(TodoList.order(:id).offset(5).limit(5).pluck(:id))
+      end
     end
   end
 

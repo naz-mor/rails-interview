@@ -11,9 +11,20 @@ describe TodoListsController do
       expect(response.status).to eq(200)
     end
 
-    it 'assigns all todo lists' do
+    it 'assigns todo lists with the default page size' do
+      10.times { |index| TodoList.create!(name: "List #{index}") }
+
       get :index
-      expect(assigns(:todo_lists)).to include(todo_list)
+
+      expect(assigns(:todo_lists).to_a).to eq(TodoList.order(:id).limit(10).to_a)
+    end
+
+    it 'uses the requested page and page size' do
+      12.times { |index| TodoList.create!(name: "List #{index}") }
+
+      get :index, params: { page: 2, per_page: 5 }
+
+      expect(assigns(:todo_lists).to_a).to eq(TodoList.order(:id).offset(5).limit(5).to_a)
     end
 
     it 'rejects unsupported formats' do
@@ -113,6 +124,30 @@ describe TodoListsController do
       expect(item_positions).to eq(item_positions.sort)
     end
 
+    it 'assigns todo items with the default page size' do
+      11.times { |index| todo_list.todo_items.create!(name: "Item #{index}") }
+
+      get :edit, params: { id: todo_list.id }
+
+      expect(assigns(:todo_items).to_a).to eq(todo_list.todo_items.limit(10).to_a)
+    end
+
+    it 'uses the requested todo items page and page size' do
+      12.times { |index| todo_list.todo_items.create!(name: "Item #{index}") }
+
+      get :edit, params: { id: todo_list.id, page: 2, per_page: 5 }
+
+      expect(assigns(:todo_items).to_a).to eq(todo_list.todo_items.offset(5).limit(5).to_a)
+    end
+
+    it 'renders only the requested todo items page' do
+      11.times { |index| todo_list.todo_items.create!(name: "Item #{index}") }
+
+      get :edit, params: { id: todo_list.id }
+
+      expect(response.body).not_to include(todo_list.todo_items.offset(10).first.name)
+    end
+
     it 'renders the complete-all icon as unchecked when there are incomplete items' do
       todo_list.todo_items.create!(name: 'Buy milk')
 
@@ -155,7 +190,7 @@ describe TodoListsController do
         expect(response).to redirect_to(todo_lists_path)
       end
 
-      it 'updates nested todo items with permitted attributes' do
+      it 'does not update nested todo items' do
         todo_item = todo_list.todo_items.create!(name: 'Old name')
         removable_item = todo_list.todo_items.create!(name: 'Remove me')
 
@@ -170,9 +205,9 @@ describe TodoListsController do
           }
         }
 
-        expect(todo_item.reload.name).to eq('New name')
-        expect(todo_item.completed?).to be(true)
-        expect(todo_list.todo_items.exists?(removable_item.id)).to be(false)
+        expect(todo_item.reload.name).to eq('Old name')
+        expect(todo_item.completed?).to be(false)
+        expect(todo_list.todo_items.exists?(removable_item.id)).to be(true)
       end
     end
 

@@ -176,6 +176,11 @@ input {
   gap: 24px;
 }
 
+.items-list--scrollable {
+  max-height: calc(6 * 64px + 5 * 24px);
+  overflow-y: auto;
+}
+
 .empty-state {
   margin: 0;
   color: var(--todo-black);

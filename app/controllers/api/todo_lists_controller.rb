@@ -4,7 +4,7 @@ module Api
 
     # GET /api/todolists
     def index
-      @todo_lists = TodoList.all
+      @todo_lists = paginate(TodoList.order(:id))
     end
 
     # GET /api/todolists/:id

@@ -140,6 +140,10 @@ The current logo/icon assets come from `tmp/images/` and are used as visual refe
 
 In the Rails app, the interactive icons are copied into `app/assets/images/`.
 
+## Scrollable item lists
+
+Todo/task item lists should show about six rows at a time. When there are more items than fit in that area, the list itself should scroll vertically instead of growing the whole panel indefinitely.
+
 ## Todo list edit page
 
 The todo list edit page follows the shared main container standard.

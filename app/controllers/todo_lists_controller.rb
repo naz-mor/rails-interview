@@ -3,12 +3,12 @@ class TodoListsController < App::ApplicationController
 
   # GET /todolists
   def index
-    @todo_lists = TodoList.all
+    @todo_lists = paginate(TodoList.order(:id))
   end
 
   # POST /todolists
   def create
-    @todo_list = TodoList.new(todo_list_params)
+    @todo_list = TodoList.new(todo_list_create_params)
 
     if @todo_list.save
       respond_to do |format|
@@ -22,6 +22,7 @@ class TodoListsController < App::ApplicationController
 
   # GET /todolists/:id/edit
   def edit
+    @todo_items = paginate(@todo_list.todo_items)
   end
 
   # PATCH/PUT /todolists/:id
@@ -50,9 +51,13 @@ class TodoListsController < App::ApplicationController
   end
 
   def todo_list_params
+    params.require(:todo_list).permit(:name)
+  end
+
+  def todo_list_create_params
     params.require(:todo_list).permit(
       :name,
-      todo_items_attributes: %i[id name completed _destroy]
+      todo_items_attributes: %i[name completed]
     )
   end
 end

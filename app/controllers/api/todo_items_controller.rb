@@ -2,6 +2,11 @@ module Api
   class TodoItemsController < Api::ApplicationController
     before_action :set_todo_list
 
+    # GET /api/todolists/:todo_list_id/todo_items
+    def index
+      @todo_items = paginate(@todo_list.todo_items)
+    end
+
     # POST /api/todolists/:todo_list_id/todo_items
     def create
       @todo_item = @todo_list.todo_items.build(todo_item_params)

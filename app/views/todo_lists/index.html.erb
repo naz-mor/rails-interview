@@ -7,7 +7,7 @@
     <div class="todo-panel__body">
       <%= render "inline_form", todo_list: TodoList.new %>
 
-      <div class="items-list" id="todo_lists">
+      <div class="items-list items-list--scrollable" id="todo_lists">
         <% if @todo_lists.empty? %>
           <p class="empty-state" id="empty_todo_lists">No lists have been entered yet</p>
         <% else %>

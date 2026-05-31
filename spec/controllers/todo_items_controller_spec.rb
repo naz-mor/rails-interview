@@ -5,6 +5,38 @@ describe TodoItemsController do
 
   let(:todo_list) { TodoList.create!(name: 'My List') }
 
+  describe 'GET index' do
+    it 'returns a success code' do
+      get :index, params: { todo_list_id: todo_list.id }
+
+      expect(response.status).to eq(200)
+    end
+
+    it 'renders todo items with the default page size' do
+      11.times { |index| todo_list.todo_items.create!(name: "Item #{index}") }
+
+      get :index, params: { todo_list_id: todo_list.id }
+
+      expect(assigns(:todo_items).to_a).to eq(todo_list.todo_items.limit(10).to_a)
+      expect(response.body).not_to include(todo_list.todo_items.offset(10).first.name)
+    end
+
+    it 'uses the requested page and page size' do
+      12.times { |index| todo_list.todo_items.create!(name: "Item #{index}") }
+
+      get :index, params: { todo_list_id: todo_list.id, page: 2, per_page: 5 }
+
+      expect(assigns(:todo_items).to_a).to eq(todo_list.todo_items.offset(5).limit(5).to_a)
+    end
+
+    it 'rejects unsupported formats' do
+      expect { get :index, params: { todo_list_id: todo_list.id }, format: :json }.to raise_error(
+        ActionController::RoutingError,
+        'Not supported format'
+      )
+    end
+  end
+
   describe 'POST create' do
     context 'with valid params' do
       it 'creates a new todo item' do
@@ -74,6 +106,15 @@ describe TodoItemsController do
 
       expect(response).to redirect_to(edit_todo_list_path(todo_list))
       expect(flash[:notice]).to eq('Todo item updated successfully.')
+    end
+
+    it 'replaces the todo items list and complete-all button for turbo stream requests' do
+      patch :update, params: { todo_list_id: todo_list.id, id: todo_item.id, todo_item: { completed: '1' } }, format: :turbo_stream
+
+      expect(response.media_type).to eq(Mime[:turbo_stream].to_s)
+      expect(response).to render_template(:update)
+      expect(response.body).to include('action="replace" target="todo_items"')
+      expect(response.body).to include("action=\"replace\" target=\"complete_all_todo_list_#{todo_list.id}\"")
     end
   end
 

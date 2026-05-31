@@ -1,6 +1,14 @@
 class TodoItemsController < App::ApplicationController
   before_action :set_todo_list
 
+  def index
+    @todo_items = paginate(@todo_list.todo_items)
+
+    respond_to do |format|
+      format.html { render partial: "todo_items/todo_item", collection: @todo_items, locals: { todo_list: @todo_list } }
+    end
+  end
+
   def create
     @todo_item = @todo_list.todo_items.build(todo_item_params)
 
@@ -16,8 +24,15 @@ class TodoItemsController < App::ApplicationController
 
   def update
     @todo_item = @todo_list.todo_items.find(params.require(:id))
-    @todo_item.update!(todo_item_params)
-    redirect_to edit_todo_list_path(@todo_list), notice: 'Todo item updated successfully.'
+
+    if @todo_item.update(todo_item_params)
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to edit_todo_list_path(@todo_list), notice: 'Todo item updated successfully.' }
+      end
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def destroy

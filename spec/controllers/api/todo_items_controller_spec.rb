@@ -5,6 +5,42 @@ describe Api::TodoItemsController do
 
   let(:todo_list) { TodoList.create!(name: 'My List') }
 
+  describe 'GET index' do
+    context 'when format is HTML' do
+      it 'raises a routing error' do
+        expect {
+          get :index, params: { todo_list_id: todo_list.id }, format: :html
+        }.to raise_error(ActionController::RoutingError, 'Not supported format')
+      end
+    end
+
+    context 'when format is JSON' do
+      it 'returns a success code' do
+        get :index, params: { todo_list_id: todo_list.id }, format: :json
+
+        expect(response.status).to eq(200)
+      end
+
+      it 'returns paginated todo items with the default page size' do
+        11.times { |index| todo_list.todo_items.create!(name: "Item #{index}") }
+
+        get :index, params: { todo_list_id: todo_list.id }, format: :json
+
+        todo_items = JSON.parse(response.body)
+        expect(todo_items.map { |item| item['id'] }).to eq(todo_list.todo_items.limit(10).pluck(:id))
+      end
+
+      it 'uses the requested page and page size' do
+        12.times { |index| todo_list.todo_items.create!(name: "Item #{index}") }
+
+        get :index, params: { todo_list_id: todo_list.id, page: 2, per_page: 5 }, format: :json
+
+        todo_items = JSON.parse(response.body)
+        expect(todo_items.map { |item| item['id'] }).to eq(todo_list.todo_items.offset(5).limit(5).pluck(:id))
+      end
+    end
+  end
+
   describe 'POST create' do
     context 'with valid params' do
       it 'creates a new todo item' do
