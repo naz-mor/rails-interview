@@ -173,7 +173,7 @@ input {
   min-height: 86px;
   padding: 18px 112px 18px 36px;
   border: 4px solid var(--todo-black);
-  border-radius: 36px;
+  border-radius: 100px;
   color: var(--todo-black);
   font-weight: 400;
   font-size: 32px;
