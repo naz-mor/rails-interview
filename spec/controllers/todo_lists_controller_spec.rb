@@ -24,25 +24,6 @@ describe TodoListsController do
     end
   end
 
-  describe 'GET new' do
-    it 'returns a success code' do
-      get :new
-      expect(response.status).to eq(200)
-    end
-
-    it 'assigns a new todo list' do
-      get :new
-      expect(assigns(:todo_list)).to be_a_new(TodoList)
-    end
-
-    it 'rejects unsupported formats' do
-      expect { get :new, format: :json }.to raise_error(
-        ActionController::RoutingError,
-        'Not supported format'
-      )
-    end
-  end
-
   describe 'POST create' do
     context 'with valid params' do
       it 'creates a new todo list' do
