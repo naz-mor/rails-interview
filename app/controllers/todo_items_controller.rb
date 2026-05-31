@@ -16,7 +16,11 @@ class TodoItemsController < App::ApplicationController
   def destroy
     @todo_item = @todo_list.todo_items.find(params.require(:id))
     @todo_item.destroy
-    redirect_to edit_todo_list_path(@todo_list), notice: 'Todo item deleted successfully.'
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to edit_todo_list_path(@todo_list), notice: 'Todo item deleted successfully.' }
+    end
   end
 
   private

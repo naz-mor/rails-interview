@@ -110,5 +110,14 @@ describe TodoItemsController do
       expect(response).to redirect_to(edit_todo_list_path(todo_list))
       expect(flash[:notice]).to eq('Todo item deleted successfully.')
     end
+
+    it 'removes the todo item for turbo stream requests' do
+      delete :destroy, params: { todo_list_id: todo_list.id, id: todo_item.id }, format: :turbo_stream
+
+      expect(response.media_type).to eq(Mime[:turbo_stream].to_s)
+      expect(response).to render_template(:destroy)
+      expect(response.body).to include('action="remove" target="todo_item_')
+      expect(response.body).to include("target=\"todo_item_#{todo_item.id}\"")
+    end
   end
 end

@@ -195,5 +195,14 @@ describe TodoListsController do
       delete :destroy, params: { id: todo_list.id }
       expect(response).to redirect_to(todo_lists_path)
     end
+
+    it 'removes the todo list for turbo stream requests' do
+      delete :destroy, params: { id: todo_list.id }, format: :turbo_stream
+
+      expect(response.media_type).to eq(Mime[:turbo_stream].to_s)
+      expect(response).to render_template(:destroy)
+      expect(response.body).to include('action="remove" target="todo_list_')
+      expect(response.body).to include("target=\"todo_list_#{todo_list.id}\"")
+    end
   end
 end

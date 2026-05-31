@@ -29,7 +29,11 @@ class TodoListsController < App::ApplicationController
   # DELETE /todolists/:id
   def destroy
     @todo_list.destroy
-    redirect_to todo_lists_path
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to todo_lists_path }
+    end
   end
 
   private
