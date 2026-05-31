@@ -29,6 +29,16 @@ describe TodoItemsController do
       expect(assigns(:todo_items).to_a).to eq(todo_list.todo_items.offset(5).limit(5).to_a)
     end
 
+    it 'renders the requested todo items page inside its turbo frame' do
+      12.times { |index| todo_list.todo_items.create!(name: "Item #{index}") }
+
+      get :index, params: { todo_list_id: todo_list.id, page: 2, per_page: 5 }
+
+      expect(response.body).to include('id="todo_items_page_2"')
+      expect(response.body).to include(todo_list.todo_items.offset(5).first.name)
+      expect(response.body).to include('id="todo_items_page_3"')
+    end
+
     it 'rejects unsupported formats' do
       expect { get :index, params: { todo_list_id: todo_list.id }, format: :json }.to raise_error(
         ActionController::RoutingError,

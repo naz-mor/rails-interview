@@ -5,7 +5,13 @@ module Paginatable
   private
 
   def paginate(scope)
-    scope.offset((current_page - 1) * per_page).limit(per_page)
+    @current_page = current_page
+    @per_page = per_page
+
+    records = scope.offset((@current_page - 1) * @per_page).limit(@per_page + 1).to_a
+    @next_page = records.size > @per_page ? @current_page + 1 : nil
+
+    records.first(@per_page)
   end
 
   def current_page

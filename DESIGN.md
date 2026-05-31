@@ -144,6 +144,12 @@ In the Rails app, the interactive icons are copied into `app/assets/images/`.
 
 Todo/task item lists should show about six rows at a time. When there are more items than fit in that area, the list itself should scroll vertically instead of growing the whole panel indefinitely.
 
+Long lists use infinite pagination. The visible list includes an invisible lazy Turbo Frame at the bottom when another page exists. While the frame is loading, it displays:
+
+> Loading…
+
+Rows should use bottom margins for vertical rhythm instead of flex `gap`, so spacing stays consistent between the initially-rendered rows and rows loaded by nested Turbo Frames.
+
 ## Todo list edit page
 
 The todo list edit page follows the shared main container standard.

@@ -1,9 +1,15 @@
 <% todo_items = (local_assigns[:todo_items] || todo_list.todo_items).select(&:persisted?) %>
+<% next_page = local_assigns.fetch(:next_page, defined?(@next_page) ? @next_page : nil) %>
+<% per_page = local_assigns.fetch(:per_page, defined?(@per_page) ? @per_page : nil) %>
 
 <div class="items-list items-list--scrollable" id="todo_items">
   <% if todo_items.empty? %>
     <p class="empty-state" id="empty_todo_items">No tasks have been entered yet</p>
   <% else %>
     <%= render partial: "todo_items/todo_item", collection: todo_items, locals: { todo_list: todo_list } %>
+
+    <% if next_page %>
+      <%= render "shared/pagination_frame", frame_id: "todo_items_page_#{next_page}", src: todo_list_todo_items_path(todo_list, page: next_page, per_page: per_page) %>
+    <% end %>
   <% end %>
 </div>

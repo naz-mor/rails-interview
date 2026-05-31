@@ -5,7 +5,9 @@ class TodoItemsController < App::ApplicationController
     @todo_items = paginate(@todo_list.todo_items)
 
     respond_to do |format|
-      format.html { render partial: "todo_items/todo_item", collection: @todo_items, locals: { todo_list: @todo_list } }
+      format.html do
+        render partial: "todo_items/page", locals: pagination_locals.merge(todo_list: @todo_list, todo_items: @todo_items)
+      end
     end
   end
 
@@ -53,5 +55,9 @@ class TodoItemsController < App::ApplicationController
 
   def todo_item_params
     params.require(:todo_item).permit(:name, :completed)
+  end
+
+  def pagination_locals
+    { page: @current_page, next_page: @next_page, per_page: @per_page }
   end
 end

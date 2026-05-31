@@ -27,6 +27,27 @@ describe TodoListsController do
       expect(assigns(:todo_lists).to_a).to eq(TodoList.order(:id).offset(5).limit(5).to_a)
     end
 
+    it 'renders a lazy next-page frame when more todo lists exist' do
+      10.times { |index| TodoList.create!(name: "List #{index}") }
+
+      get :index
+
+      expect(response.body).to include('id="todo_lists_page_2"')
+      expect(response.body).to include('loading="lazy"')
+      expect(response.body).to include('Loading…')
+    end
+
+    it 'renders the requested todo lists page inside its turbo frame' do
+      12.times { |index| TodoList.create!(name: "List #{index}") }
+      request.headers['Turbo-Frame'] = 'todo_lists_page_2'
+
+      get :index, params: { page: 2, per_page: 5 }
+
+      expect(response.body).to include('id="todo_lists_page_2"')
+      expect(response.body).to include(TodoList.order(:id).offset(5).first.name)
+      expect(response.body).to include('id="todo_lists_page_3"')
+    end
+
     it 'rejects unsupported formats' do
       expect { get :index, format: :json }.to raise_error(
         ActionController::RoutingError,
@@ -146,6 +167,16 @@ describe TodoListsController do
       get :edit, params: { id: todo_list.id }
 
       expect(response.body).not_to include(todo_list.todo_items.offset(10).first.name)
+    end
+
+    it 'renders a lazy next-page frame when more todo items exist' do
+      11.times { |index| todo_list.todo_items.create!(name: "Item #{index}") }
+
+      get :edit, params: { id: todo_list.id }
+
+      expect(response.body).to include('id="todo_items_page_2"')
+      expect(response.body).to include('loading="lazy"')
+      expect(response.body).to include('Loading…')
     end
 
     it 'renders the complete-all icon as unchecked when there are incomplete items' do

@@ -69,6 +69,7 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
   * [UI foundation](https://pi.dev/session/#a4f0ad204a230f940b4713ea384305d5)
   * [API support for pagination](https://pi.dev/session/#2f7df604dbc21f7b7a2da8f34f25d3cd)
   * [Refactor to start moving actions to items controller](https://pi.dev/session/#1ab73094019d47769f951647776fa586)
+  * [Implement infinite pagination](https://pi.dev/session/#abbeedcd9576f39956f1db8a5cca9008)
 
 ### Key decisions
 

@@ -4,6 +4,14 @@ class TodoListsController < App::ApplicationController
   # GET /todolists
   def index
     @todo_lists = paginate(TodoList.order(:id))
+
+    respond_to do |format|
+      format.html do
+        if turbo_frame_request?
+          render partial: "todo_lists/page", locals: pagination_locals.merge(todo_lists: @todo_lists)
+        end
+      end
+    end
   end
 
   # POST /todolists
@@ -59,5 +67,9 @@ class TodoListsController < App::ApplicationController
       :name,
       todo_items_attributes: %i[name completed]
     )
+  end
+
+  def pagination_locals
+    { page: @current_page, next_page: @next_page, per_page: @per_page }
   end
 end

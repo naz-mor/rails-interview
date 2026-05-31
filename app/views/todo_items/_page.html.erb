@@ -1,0 +1,7 @@
+<%= turbo_frame_tag "todo_items_page_#{page}", class: "pagination-frame" do %>
+  <%= render partial: "todo_items/todo_item", collection: todo_items, locals: { todo_list: todo_list } %>
+
+  <% if next_page %>
+    <%= render "shared/pagination_frame", frame_id: "todo_items_page_#{next_page}", src: todo_list_todo_items_path(todo_list, page: next_page, per_page: per_page) %>
+  <% end %>
+<% end %>
