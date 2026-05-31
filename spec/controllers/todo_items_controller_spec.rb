@@ -1,45 +1,30 @@
 require 'rails_helper'
 
 describe TodoItemsController do
+  render_views
+
   let(:todo_list) { TodoList.create!(name: 'My List') }
-
-  describe 'GET new' do
-    it 'returns a success code' do
-      get :new, params: { todo_list_id: todo_list.id }
-      expect(response.status).to eq(200)
-    end
-
-    it 'assigns a new todo item scoped to the todo list' do
-      get :new, params: { todo_list_id: todo_list.id }
-      expect(assigns(:todo_item)).to be_a_new(TodoItem)
-      expect(assigns(:todo_item).todo_list).to eq(todo_list)
-    end
-
-    it 'rejects unsupported formats' do
-      expect { get :new, params: { todo_list_id: todo_list.id }, format: :json }.to raise_error(
-        ActionController::RoutingError,
-        'Not supported format'
-      )
-    end
-  end
 
   describe 'POST create' do
     context 'with valid params' do
       it 'creates a new todo item' do
         expect {
-          post :create, params: { todo_list_id: todo_list.id, todo_item: { name: 'Buy milk' } }
+          post :create, params: { todo_list_id: todo_list.id, todo_item: { name: 'Buy milk' } }, format: :turbo_stream
         }.to change(TodoItem, :count).by(1)
       end
 
       it 'associates the item with the todo list' do
-        post :create, params: { todo_list_id: todo_list.id, todo_item: { name: 'Buy milk' } }
+        post :create, params: { todo_list_id: todo_list.id, todo_item: { name: 'Buy milk' } }, format: :turbo_stream
         expect(todo_list.todo_items.last.name).to eq('Buy milk')
       end
 
-      it 'redirects to the edit todo list page' do
-        post :create, params: { todo_list_id: todo_list.id, todo_item: { name: 'Buy milk' } }
-        expect(response).to redirect_to(edit_todo_list_path(todo_list))
-        expect(flash[:notice]).to eq('Todo item created successfully.')
+      it 'appends the todo item and replaces the inline form for turbo stream requests' do
+        post :create, params: { todo_list_id: todo_list.id, todo_item: { name: 'Buy milk' } }, format: :turbo_stream
+
+        expect(response.media_type).to eq(Mime[:turbo_stream].to_s)
+        expect(response).to render_template(:create)
+        expect(response.body).to include('action="append" target="todo_items"')
+        expect(response.body).to include('action="replace" target="new_todo_item"')
       end
     end
 
@@ -50,11 +35,11 @@ describe TodoItemsController do
         }.not_to change(TodoItem, :count)
       end
 
-      it 'renders the todo list edit page with unprocessable entity status' do
+      it 'renders new with unprocessable entity status' do
         post :create, params: { todo_list_id: todo_list.id, todo_item: { name: '' } }
 
         expect(response.status).to eq(422)
-        expect(response).to render_template('todo_lists/edit')
+        expect(response).to render_template(:new)
         expect(assigns(:todo_item).errors[:name]).to include("can't be blank")
       end
     end
