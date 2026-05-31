@@ -3,7 +3,6 @@ class TodoListsController < App::ApplicationController
 
   # GET /todolists
   def index
-    @todo_list = TodoList.new
     @todo_lists = TodoList.all
   end
 

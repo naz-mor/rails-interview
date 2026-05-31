@@ -5,7 +5,7 @@
     </header>
 
     <div class="todo-panel__body">
-      <%= render "inline_form", todo_list: @todo_list %>
+      <%= render "inline_form", todo_list: TodoList.new %>
 
       <div class="items-list" id="todo_lists">
         <% if @todo_lists.empty? %>
