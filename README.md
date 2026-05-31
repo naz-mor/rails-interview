@@ -83,6 +83,7 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
 * Not using Inter as font: For simplicity and performance, we use the default font for system/browser.
 * Adding name presence validations to TodoList.
 * I decided to order items in a todo list by the completed attribute and the creation of the item. 
+* System tests: Asked GPT to create some system tests, I didn't spend effort there, but consider to be nice to have at least something.
 
 ### Out of scope
 
