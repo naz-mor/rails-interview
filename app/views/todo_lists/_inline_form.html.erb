@@ -1,14 +1,5 @@
 <%= turbo_frame_tag "new_todo_list" do %>
-  <% if todo_list.errors.any? %>
-    <aside class="error-overlay" role="alert" aria-live="assertive" data-controller="dismissible">
-      <div class="error-box">
-        <button class="error-box__close" type="button" aria-label="Close errors" data-action="dismissible#dismiss">&times;</button>
-        <% todo_list.errors.full_messages.each do |message| %>
-          <p><%= message %></p>
-        <% end %>
-      </div>
-    </aside>
-  <% end %>
+  <%= render "shared/errors", object: todo_list %>
 
   <%= form_with model: todo_list, url: todo_lists_path, class: "inline-create-form" do |f| %>
     <%= f.text_field :name, placeholder: "Add your list…", class: "text-input" %>

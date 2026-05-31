@@ -40,6 +40,8 @@ describe TodoLists::NameController do
 
       expect(response.status).to eq(422)
       expect(response.body).to include('todo-list-name-form')
+      expect(response.body).to include('error-overlay')
+      expect(response.body).to include('error-box')
       expect(response.body).to include('Name has already been taken')
     end
   end

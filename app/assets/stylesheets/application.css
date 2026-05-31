@@ -135,21 +135,6 @@ input {
   color: var(--todo-white);
 }
 
-.todo-list-name-form__errors {
-  margin-bottom: 8px;
-  padding: 8px 12px;
-  border-radius: 12px;
-  background: var(--todo-white);
-  color: var(--todo-error);
-  font-size: 16px;
-  font-weight: 700;
-  text-align: center;
-}
-
-.todo-list-name-form__errors p {
-  margin: 0;
-}
-
 .todo-panel__body {
   display: flex;
   flex-direction: column;

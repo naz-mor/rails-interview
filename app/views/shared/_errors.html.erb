@@ -1,0 +1,10 @@
+<% if object.errors.any? %>
+  <aside class="error-overlay" role="alert" aria-live="assertive" data-controller="dismissible">
+    <div class="error-box">
+      <button class="error-box__close" type="button" aria-label="Close errors" data-action="dismissible#dismiss">&times;</button>
+      <% object.errors.full_messages.each do |message| %>
+        <p><%= message %></p>
+      <% end %>
+    </div>
+  </aside>
+<% end %>
