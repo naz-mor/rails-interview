@@ -57,6 +57,7 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
 * [route /todo_items not /items](https://pi.dev/session/#3b72d947bacefcd68f8201def24c51a5)
 * implementing design
   * [first draft](https://pi.dev/session/#b27930b9f12768ae06f93d560c568fc8)
+  * [refactor non-conventional controllers](https://pi.dev/session/#65f55a2312bfa6fce48a4a31dcb00e22)
 * [add name presence validation to todo lists](https://pi.dev/session/#325f435b830cda960e1c2650c36d283e)
 
 ### Key decisions
