@@ -1,8 +1,22 @@
 # rails-interview / TodoApi
 
-[![Open in Coder](https://dev.crunchloop.io/open-in-coder.svg)](https://dev.crunchloop.io/templates/fly-containers/workspace?param.Git%20Repository=git@github.com:crunchloop/rails-interview.git)
-
 This is a simple Todo List API built in Ruby on Rails 7. This project is currently being used for Ruby full-stack candidates.
+
+## Recordings of post-recording requirements
+
+### Implement designs
+
+https://github.com/user-attachments/assets/a941b893-8872-44eb-9324-d34245164531
+
+### Deleting Item - non-blocking
+
+https://github.com/user-attachments/assets/959d5e59-b72d-4b3a-bb2c-126d7687f201
+
+### Complete All - non-blocking
+
+https://github.com/user-attachments/assets/be225f3a-e1b4-4758-8403-dc6237fdae7e
+
+See below for LLM sessions and key decisions.
 
 ## Design
 
@@ -27,16 +41,6 @@ To run tests:
 `bin/rspec`
 
 Check integration tests at: (https://github.com/crunchloop/interview-tests)
-
-## Contact
-
-- Santiago Doldán (sdoldan@crunchloop.io)
-
-## About Crunchloop
-
-![crunchloop](https://s3.amazonaws.com/crunchloop.io/logo-blue.png)
-
-We strongly believe in giving back :rocket:. Let's work together [`Get in touch`](https://crunchloop.io/#contact).
 
 ## Nazareno Moresco 
 
