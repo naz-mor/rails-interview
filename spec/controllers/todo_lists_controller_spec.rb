@@ -99,6 +99,20 @@ describe TodoListsController do
       expect(assigns(:todo_list)).to eq(todo_list)
     end
 
+    it 'renders todo items with uncompleted items first, newest to oldest' do
+      old_completed = todo_list.todo_items.create!(name: 'Old completed', completed_at: 3.days.ago, created_at: 3.days.ago, updated_at: 3.days.ago)
+      new_completed = todo_list.todo_items.create!(name: 'New completed', completed_at: 2.days.ago, created_at: 2.days.ago, updated_at: 2.days.ago)
+      old_uncompleted = todo_list.todo_items.create!(name: 'Old uncompleted', created_at: 4.days.ago, updated_at: 4.days.ago)
+      new_uncompleted = todo_list.todo_items.create!(name: 'New uncompleted', created_at: 1.day.ago, updated_at: 1.day.ago)
+
+      get :edit, params: { id: todo_list.id }
+
+      item_names = [new_uncompleted, old_uncompleted, new_completed, old_completed].map(&:name)
+      item_positions = item_names.map { |name| response.body.index(name) }
+
+      expect(item_positions).to eq(item_positions.sort)
+    end
+
     it 'rejects unsupported formats' do
       expect { get :edit, params: { id: todo_list.id }, format: :json }.to raise_error(
         ActionController::RoutingError,

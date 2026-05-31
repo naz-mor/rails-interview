@@ -59,6 +59,7 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
   * [first draft](https://pi.dev/session/#b27930b9f12768ae06f93d560c568fc8)
   * [refactor non-conventional controllers](https://pi.dev/session/#65f55a2312bfa6fce48a4a31dcb00e22)
   * [improve error message UI](https://pi.dev/session/#21f5c74fcb3bcaaff4b9bb27616ca677)
+  * [order items](https://pi.dev/session/#1b2927abf9157f2359999f3286e4b44c)
 * [add name presence validation to todo lists](https://pi.dev/session/#325f435b830cda960e1c2650c36d283e)
 * [post-interview ask: deletion of items shouldn't refresh the whole page](https://pi.dev/session/#11ca901ce3889b4a68fa04e66986703f)
 * [restore HTML responses](https://pi.dev/session/#169b431e98dad73f89256515e54c7618)
@@ -73,3 +74,8 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
 * No Authorization: I decided to not add Authorization. It depends on the use this project will have whether we need it or not. Since so far it doesn't have Authorization, it might be that the applications runs locally for users. One might argue that if would be local the API wouldn't make sense, but the users might find it useful to setup local automations in their machines. For now it will remain out of scope.
 * Not using Inter as font: For simplicity and performance, we use the default font for system/browser.
 * Adding name presence validations to TodoList.
+* I decided to order items in a todo list by the completed attribute and the creation of the item. 
+
+### Out of scope
+
+* When checking an item the todo list should reorder.

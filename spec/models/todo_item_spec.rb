@@ -17,6 +17,26 @@ describe TodoItem do
     end
   end
 
+  describe '.ordered_by_completed' do
+    it 'orders uncompleted items before completed items by default' do
+      completed = todo_list.todo_items.create!(name: 'Completed', completed_at: 3.days.ago, created_at: 3.days.ago, updated_at: 3.days.ago)
+      uncompleted = todo_list.todo_items.create!(name: 'Uncompleted', created_at: 4.days.ago, updated_at: 4.days.ago)
+
+      expect(TodoItem.ordered_by_completed).to eq([uncompleted, completed])
+    end
+
+    it 'accepts a direction for the timestamp boolean order' do
+      completed = todo_list.todo_items.create!(name: 'Completed', completed_at: 3.days.ago, created_at: 3.days.ago, updated_at: 3.days.ago)
+      uncompleted = todo_list.todo_items.create!(name: 'Uncompleted', created_at: 4.days.ago, updated_at: 4.days.ago)
+
+      expect(TodoItem.ordered_by_completed(:desc)).to eq([completed, uncompleted])
+    end
+
+    it 'raises for unsupported directions' do
+      expect { TodoItem.ordered_by_completed(:sideways) }.to raise_error(ArgumentError, 'direction must be :asc or :desc')
+    end
+  end
+
   describe '#completed?' do
     it 'returns false when completed_at is nil' do
       item = TodoItem.new(name: 'Buy milk', todo_list: todo_list)

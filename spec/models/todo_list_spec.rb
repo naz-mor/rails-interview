@@ -51,6 +51,15 @@ describe TodoList do
       expect(todo_list.todo_items.count).to eq(2)
     end
 
+    it 'orders todo_items with uncompleted items first, then newest to oldest' do
+      old_completed = todo_list.todo_items.create!(name: 'Old completed', completed_at: 3.days.ago, created_at: 3.days.ago, updated_at: 3.days.ago)
+      new_completed = todo_list.todo_items.create!(name: 'New completed', completed_at: 2.days.ago, created_at: 2.days.ago, updated_at: 2.days.ago)
+      old_uncompleted = todo_list.todo_items.create!(name: 'Old uncompleted', created_at: 4.days.ago, updated_at: 4.days.ago)
+      new_uncompleted = todo_list.todo_items.create!(name: 'New uncompleted', created_at: 1.day.ago, updated_at: 1.day.ago)
+
+      expect(todo_list.todo_items).to eq([new_uncompleted, old_uncompleted, new_completed, old_completed])
+    end
+
     it 'destroys associated todo_items on destroy' do
       todo_list.todo_items.create!(name: 'Item 1')
 
