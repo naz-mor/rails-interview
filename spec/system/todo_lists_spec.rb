@@ -27,6 +27,14 @@ RSpec.describe 'Todo lists', type: :system do
     find(:xpath, ".//span[@aria-label='Complete all tasks']/ancestor::button").click
   end
 
+  def begin_editing_list_name(name)
+    find("a[aria-label='Edit #{name} name']").click
+  end
+
+  def set_list_name(name)
+    find("input[name='todo_list[name]']").set(name)
+  end
+
   describe 'index page' do
     it 'shows the no lists empty state' do
       visit todo_lists_path
@@ -101,6 +109,46 @@ RSpec.describe 'Todo lists', type: :system do
       expect(page).to have_current_path(edit_todo_list_path(todo_list))
       expect(page).to have_text('Draft proposal')
       expect(page).to have_no_text('No tasks have been entered yet')
+    end
+
+    it 'cancels editing the list name' do
+      todo_list = TodoList.create!(name: 'Project Tasks')
+
+      visit edit_todo_list_path(todo_list)
+      begin_editing_list_name('Project Tasks')
+      set_list_name('Renamed Project Tasks')
+      click_link 'Cancel'
+
+      expect(todo_list.reload.name).to eq('Project Tasks')
+      expect(page).to have_current_path(edit_todo_list_path(todo_list))
+      expect(page).to have_css('h1', text: 'Project Tasks')
+      expect(page).to have_no_css('.todo-list-name-form')
+    end
+
+    it 'shows validation errors when editing the list name' do
+      todo_list = TodoList.create!(name: 'Project Tasks')
+
+      visit edit_todo_list_path(todo_list)
+      begin_editing_list_name('Project Tasks')
+      set_list_name('')
+      click_button 'Save'
+
+      expect(todo_list.reload.name).to eq('Project Tasks')
+      expect(page).to have_text("Name can't be blank")
+      expect(page).to have_css('.todo-list-name-form')
+    end
+
+    it 'saves edits to the list name' do
+      todo_list = TodoList.create!(name: 'Project Tasks')
+
+      visit edit_todo_list_path(todo_list)
+      begin_editing_list_name('Project Tasks')
+      set_list_name('Renamed Project Tasks')
+      click_button 'Save'
+
+      expect(todo_list.reload.name).to eq('Renamed Project Tasks')
+      expect(page).to have_css('h1', text: 'Renamed Project Tasks')
+      expect(page).to have_no_css('.todo-list-name-form')
     end
 
     it 'shows validation errors when adding a task without a name' do
