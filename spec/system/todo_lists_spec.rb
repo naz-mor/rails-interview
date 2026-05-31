@@ -40,6 +40,7 @@ RSpec.describe 'Todo lists', type: :system do
       visit todo_lists_path
 
       expect(page).to have_css('h1', text: 'Todo Lists')
+      expect(page).to have_css("a.back-navigation__link[aria-label='Go back'][href='#{todo_lists_path}']", text: '←')
       expect(page).to have_text('No lists have been entered yet')
     end
 
@@ -96,8 +97,28 @@ RSpec.describe 'Todo lists', type: :system do
       visit edit_todo_list_path(todo_list)
 
       expect(page).to have_css('h1', text: 'Project Tasks')
+      expect(page).to have_css("a.back-navigation__link[aria-label='Go back'][href='#{todo_lists_path}']", text: '←')
       expect(page).to have_text('No tasks have been entered yet')
       expect(page).to have_css("form[action='#{todo_list_todo_items_path(todo_list)}']")
+    end
+
+    it 'allows returning to the todo lists index from a directly visited edit page' do
+      todo_list = TodoList.create!(name: 'Project Tasks')
+
+      visit edit_todo_list_path(todo_list)
+      find("a.back-navigation__link[aria-label='Go back']").click
+
+      expect(page).to have_current_path(todo_lists_path)
+      expect(page).to have_css('h1', text: 'Todo Lists')
+    end
+
+    it 'shows a back link when navigated from the list index' do
+      todo_list = TodoList.create!(name: 'Project Tasks')
+
+      visit todo_lists_path
+      click_link 'Project Tasks'
+
+      expect(page).to have_css("a.back-navigation__link[aria-label='Go back'][href='#{todo_lists_path}']", text: '←')
     end
 
     it 'adds a task and shows it in the list' do

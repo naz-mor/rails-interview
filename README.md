@@ -73,6 +73,7 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
   * [Implement infinite pagination](https://pi.dev/session/#abbeedcd9576f39956f1db8a5cca9008)
 * [title editing support](https://pi.dev/session/#7207fbe63e6cd4a92bc3b44ab2a9aafb)
 * [showing errors](https://pi.dev/session/#061ddd4584c4ff36dc00a20125828554)
+* [adding the possibility to redirect back](https://pi.dev/session/#ee5f2ca4011e2f8568e4cd7af140e7ad)
 
 ### Key decisions
 
@@ -86,8 +87,7 @@ All Pi sessions are stored under `sessions/`. OpenCode was also used but only to
 * Adding name presence validations to TodoList.
 * I decided to order items in a todo list by the completed attribute and the creation of the item. 
 * System tests: Asked GPT to create some system tests, I didn't spend effort there, but consider to be nice to have at least something.
-* I decided to support todo list editing.
+* I decided to support todo list name editing because, even though not specified in the designs, we used to have that feature before.
+* I added the possibilty to redirect_back, because I was stuck in the todo list edit page.
 
 ### Out of scope
-
-* When checking an item the todo list should reorder.

@@ -35,9 +35,30 @@ input {
 .page-shell {
   min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
   padding: 64px 24px;
+}
+
+.back-navigation {
+  width: min(100%, 900px);
+  margin-bottom: 20px;
+}
+
+.back-navigation__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--todo-black);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.back-navigation__link:hover,
+.back-navigation__link:focus {
+  text-decoration: underline;
 }
 
 .todo-panel {
@@ -363,15 +384,17 @@ input {
   height: 64px;
 }
 
-.back-link {
-  color: var(--todo-black);
-  font-size: 24px;
-  text-align: center;
-}
-
 @media (max-width: 640px) {
   .page-shell {
     padding: 24px 12px;
+  }
+
+  .back-navigation {
+    margin-bottom: 16px;
+  }
+
+  .back-navigation__link {
+    font-size: 40px;
   }
 
   .todo-panel__header h1,

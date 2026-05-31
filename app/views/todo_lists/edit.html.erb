@@ -1,4 +1,6 @@
 <main class="page-shell">
+  <%= render "shared/back_navigation" %>
+
   <section class="todo-panel">
     <header class="todo-panel__header todo-panel__header--with-action">
       <%= render "todo_lists/name/show", todo_list: @todo_list %>
