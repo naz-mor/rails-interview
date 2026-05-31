@@ -291,10 +291,6 @@ input {
   margin-bottom: 24px;
 }
 
-.todo-row:last-child {
-  margin-bottom: 0;
-}
-
 .todo-row__text {
   flex: 1;
   color: var(--todo-black);
